@@ -1,0 +1,210 @@
+@import url('https://fonts.googleapis.com/css2?family=Monserrat&family=Hind&display=swap');
+
+
+*{
+    font-family: 'Hind';
+}
+
+h1{
+    font-family: 'Monserrat', sans-serif;
+    font-size: 4rem;
+    color: white;
+    margin: 0px;
+    animation: fadeIn 1s linear 0s 1 forwards;
+}
+h2{
+    font-family: 'Monserrat', sans-serif;
+    font-size: 3rem;
+    color: white;
+    margin: 0px;
+}
+
+p{
+    opacity: 0;
+    color: white;
+    animation: fadeIn 2s linear 1s 1 forwards;
+}
+
+body, html{
+    height: 100%;
+    overflow: hidden;
+}
+
+.carrouselItem{
+  width: 8rem;
+  aspect-ratio: 1/1;
+  height: 8rem;
+  contain: strict;
+  border: 2px dashed darkblue;
+  border-radius: 2rem;
+  padding: 1rem;
+  background-color: rgba(0, 0, 139, 0.342);
+  margin: 1rem;
+}
+
+h1, h2, h3, p{
+    cursor: text;
+}
+
+button, a{
+    cursor: pointer;
+}
+
+.carrouselCont{
+    display: flex;
+    flex-direction: row;
+    margin-left: -1rem;
+}
+
+.carrouselItem img{
+    width: 100%;
+}
+
+.slide{
+    height: 100%;
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-left: 2rem;
+    contain: strict;
+}
+
+a{
+    all: unset;
+    display: inline;
+    cursor: pointer;
+}
+
+h1.special{
+    opacity: 0;
+    font-family: 'Monserrat', sans-serif !important;
+    animation: specialText 15s linear 0s infinite forwards, fadeIn 1s linear 0s 1 forwards !important;
+}
+
+h1.special, b.special{
+    font-family: inherit;
+    background-image: linear-gradient(to left, #ed8936, #ed64a6, #38b2ac, #0bc5ea, #ecc94b, #48bb78);
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    background-size: 400%;
+    animation: specialText 15s linear 0s infinite forwards;
+}
+
+body{
+    background-color: black;
+}
+
+@keyframes specialText {
+    from{
+        background-position-x: 0%;
+    }
+    to{
+        background-position-x: 400%;
+    }
+}
+
+h3{
+    color: white;
+    font-size: 2rem;
+}
+
+.projectScreen{
+    height: 100%;
+    contain: content;
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+}
+
+.project{
+    border: 2px dashed darkblue;
+    border-radius: 1rem;
+    height: min-content;
+    min-width: 70%;
+    padding: 1rem;
+    margin-right: 22rem;
+    background-color: rgba(0, 0, 139, 0.342);
+}
+
+.projectScreen .langIcon{
+    width: 2rem;
+}
+
+.hljs{
+    background-color: rgba(0, 2, 97, 0.329) !important;
+    border-radius: 1rem;
+}
+
+#moveSidebar{
+    opacity: 0;
+    position: absolute;
+  height: 100%;
+  left: 0;
+  top: 0;
+  width: 2rem;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  animation: fadeIn 3s linear 2s 1 forwards;
+}
+
+@keyframes fadeIn {
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }
+}
+
+.sidebarPoint{
+    position: relative;
+    width: 1rem;
+  height: 1rem;
+  border: 3px solid white;
+  border-radius: 1rem;
+  margin-top: .5rem;
+  margin-bottom: .5rem;
+  cursor: pointer;
+}
+
+.sidebarPoint.filled{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sidebarPoint.filled::after{
+    content: '';
+  width: 60%;
+  display: block;
+  height: 60%;
+  background-color: white;
+  border-radius: 1rem;
+}
+
+.sidebarPoint::before{
+    position: absolute;
+    content: '';
+    display: block;
+    width: 100%;
+    height: 100%;
+    left: .5rem;
+    top: .5rem;
+}
+
+#moveProject{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  bottom: 0px;
+  width: 100%;
+  height: 5rem;
+  color: rgba(255, 255, 255, 0.493);
+  user-select: none;
+  -moz-user-select: none;
+}

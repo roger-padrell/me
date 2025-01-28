@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roger Padrell's portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="shortcut icon" href="./assets/images/profile-whitebg.png" type="image/png">
+    <script src="./assets/objects/projects.js"></script>
+    <!-- Tippy tooltip -->
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://unpkg.com/tippy.js@6"></script>
+    <!-- syntax highliting.js-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/nim.min.js"></script>
+</head>
+<body>
+    <div id="moveSidebar">
+        <div class="sidebarPoint" data-tippy-content="Hi"></div>
+        <div class="sidebarPoint filled" data-tippy-content="Tools"></div>
+        <div class="sidebarPoint" data-tippy-content="Projects"></div>
+    </div>
+    <div class="slide">
+        <h1>Hi, I'm</h1>
+        <h1 class="special">Roger Padrell</h1>
+        <p>A software developer with <b>passion</b></p>
+        </p>
+    </div> 
+    <div class="slide" style="margin-bottom: 5rem;">
+        <h2>I use</h2>
+        <div class="carrouselCont">
+            <div class="carrouselItem" data-tippy-content="Nim">
+                <a aria-label="Nim" href="https://nim-lang.org">
+                    <img src="./assets/images/nim.png">
+                </a>
+            </div>
+            <div class="carrouselItem" data-tippy-content="Python">
+                <a aria-label="Python" href="https://python.org">
+                    <img src="./assets/images/python.png">
+                </a>
+            </div>
+            <div class="carrouselItem" data-tippy-content="Typescript">
+                <a aria-label="Typescript" href="https://www.typescriptlang.org/">
+                    <img src="./assets/images/typescript.png">
+                </a>
+            </div>
+            <div class="carrouselItem" data-tippy-content="C#">
+                <a aria-label="C#" href="https://dotnet.microsoft.com/es-es/languages/csharp">
+                    <img style="margin-top: -.5rem;" src="./assets/images/csharp.svg">
+                </a>
+            </div>
+            <div class="carrouselItem" data-tippy-content="C/C++">
+                <a aria-label="C++" href="https://isocpp.org/">
+                    <img style="margin-top: -.5rem;" src="./assets/images/cplusplus.png">
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="slide">
+        <h2>Some of the <b class="special">cool things</b> I've worked on</h2>
+        <p>(or I'm working on now)</p>
+        <div class="projectScreen" id="projectScreen">
+        </div>
+        <div id="moveProject"></div>
+    </div>
+</body>
+<script>
+    function trySlideDown(){
+        let op = 1;
+        if(slide == 0 && op == -1){
+            return;
+        }
+        if(slide == slideCount-1 && op == 1){
+            return;
+        }
+        slide += op;
+        scrollToSlide(slide)
+        scrolling=true;
+        setTimeout(function(){scrolling=false}, 100)
+    }
+
+    function trySlideProjectLeft(){
+        let op = -1;
+        if(projectN == 0 && op == -1){
+            return;
+        }
+        if(projectN == projectCount-1 && op == 1){
+            return;
+        }
+        projectN += op;
+        scrollToProject(projectN)
+        scrolling=true;
+        setTimeout(function(){scrolling=false}, 100)
+    }
+
+    function trySlideProjectRight(){
+        let op = 1;
+        if(projectN == 0 && op == -1){
+            return;
+        }
+        if(projectN == projectCount-1 && op == 1){
+            return;
+        }
+        projectN += op;
+        scrollToProject(projectN)
+        scrolling=true;
+        setTimeout(function(){scrolling=false}, 100)
+    }
+
+    function trySlideUp(){
+        let op = -1;
+        if(slide == 0 && op == -1){
+            return;
+        }
+        if(slide == slideCount-1 && op == 1){
+            return;
+        }
+        slide += op;
+        scrollToSlide(slide)
+        scrolling=true;
+        setTimeout(function(){scrolling=false}, 100)
+    }
+
+    // Start tippy.js tooltip
+    tippy('[data-tippy-content]');
+
+    let slide = 0;
+    let scrolling = false;
+    let slideCount=3;
+    let ids = ["hi","tools", "projects"]
+
+    let projectN = 0;
+    let projectCount=projects.length;
+
+    function createProjectEls(){
+        let el = document.getElementById("projectScreen");
+        el.innerHTML = "";
+        for(let p in projects){
+            let cont = `<div class="project">
+                <h3><a href="${projects[p].url}">${projects[p].name}</a> <img class="langIcon" src="./assets/images/${projects[p].lang}.png" data-tippy-content="Made in ${projects[p].lang}" alt="Made in ${projects[p].lang}"></h3>
+                <p>${projects[p].desc}</p>
+                <pre class="theme-atom-one-dark shadow-3xl text-sm relative overflow-hidden max-w-full tab-size h-full language-nim"><code class="theme-atom-one-dark shadow-3xl text-sm relative overflow-hidden max-w-full tab-size h-full language-nim">${projects[p].code}</code></pre>
+            </div>`
+            el.innerHTML += cont;
+        }
+    }
+
+    function scrollToSlide(slideID){
+        document.body.scroll({
+            top: window.screen.availHeight*slideID,
+            left: 0,
+            behavior: "smooth"
+        })
+        location.href = location.href.split("#")[0] + "#" + ids[slideID]
+
+        //change sidebarPoints
+        let arr = Array.from(document.getElementsByClassName("sidebarPoint"));
+        for(let a in arr){
+            if(a == slideID){
+                arr[a].classList.add("filled")
+            }
+            else{
+                arr[a].classList.remove("filled")
+            }
+        }
+    }
+    function scrollToProject(n){
+        let proj = document.getElementById("projectScreen");
+ 
+        proj.scroll({
+            left: proj.scrollWidth / projectCount * n,
+            behavior: "smooth"
+        })
+
+        bottomb.innerHTML = `Project ${projectN+1} of ${projectCount}`
+    }
+    document.body.addEventListener("wheel", (event) => {
+        if(!scrolling && event.deltaY != 0){
+            let op = event.deltaY<0 ? 1 : -1;
+            if(slide == 0 && op == -1){
+                return;
+            }
+            if(slide == slideCount-1 && op == 1){
+                return;
+            }
+            slide += op;
+            scrollToSlide(slide)
+            scrolling=true;
+            setTimeout(function(){scrolling=false}, 100)
+        }
+        else if(!scrolling && event.deltaX != 0){
+            let op = event.deltaX<0 ? 1 : -1;
+            if(projectN == 0 && op == -1){
+                return;
+            }
+            if(projectN == projectCount-1 && op == 1){
+                return;
+            }
+            projectN += op;
+            scrollToProject(projectN)
+            scrolling=true;
+            setTimeout(function(){scrolling=false}, 100)
+        }
+    })
+    window.onload = function(){
+        createProjectEls()
+        hljs.highlightAll();
+        if(location.href.split("#").length == 2){
+            let n = ids.indexOf(location.href.split("#")[1])
+            scrollToSlide(n)
+        }
+        else{
+            slide=0;
+            scrollToSlide(0)
+        }
+        scrollToProject(0)
+    }
+
+    //cursor
+    let sideb = document.getElementById("moveSidebar")
+    sideb.onmousemove = function(e){
+        if(!e.target.classList.value.includes("sidebarPoint")){
+            let cur = e.clientY < (screen.availHeight/2) ? "url('./assets/images/cursors/up.png'), default" : "url('./assets/images/cursors/down.png'), default";
+            sideb.style.cursor = cur;
+        }
+    }
+    sideb.onclick = function(e){
+        if(e.target.classList.value.includes("sidebarPoint")){
+            let n = Array.from(document.getElementsByClassName("sidebarPoint")).indexOf(e.target);
+            scrollToSlide(n)
+        }
+        else{
+            let fn = e.clientY < (screen.availHeight/2) ? trySlideUp : trySlideDown;
+            fn()
+        }
+    }
+    let bottomb = document.getElementById("moveProject")
+    bottomb.onmousemove = function(e){
+        let cur = e.clientX < (screen.availWidth/2) ? "url('./assets/images/cursors/left.png'), default" : "url('./assets/images/cursors/right.png'), default";
+        bottomb.style.cursor = cur;
+    }
+    bottomb.onclick = function(e){
+        let fn = e.clientX < (screen.availWidth/2) ? trySlideProjectLeft : trySlideProjectRight;
+        fn()
+    }
+</script>
+</html>
