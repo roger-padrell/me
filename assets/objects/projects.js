@@ -12,5 +12,12 @@ rout.get("/", proc(req: Request, res: Response) =
 )
 
 rout.start(8000)`
+    },
+    {
+        name: "SetupThing",
+        lang: "bash",
+        url: "https://setupthing.deno.dev/",
+        desc: "Use setups the eazy way",
+        code: `curl -sSL https://setupthing.deno.dev/api/{orderID} | bash`
     }
 ]
